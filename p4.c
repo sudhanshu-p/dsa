@@ -31,6 +31,8 @@ int main() {
 	int* arr;
 	arr = (int*) calloc(MAX, sizeof(int));
 	while(1) {
+		front = 0;
+		rear = 0;
 		printf("Enter the type of data structure you want to implement: \n1: Stack\n2: Queue\n3: Circular Queue\n4: Exit\nYour Choice: ");
 		scanf("%d", &sc);
 		switch(sc) {
@@ -80,7 +82,7 @@ int main() {
 			case 2: 
 				//Code for Implementing Queue
 				while(1) {
-					printf("\nEnter which functionality you'd like to use: \n1: Enqueue\n2: Dequeue\n3: Display Queue\n-1: go back to the data structure selection\nYour Choice: ");
+					printf("\n----------------\nEnter which functionality you'd like to use: \n1: Enqueue\n2: Dequeue\n3: Display Queue\n-1: go back to the data structure selection\nYour Choice: ");
 					scanf("%d", &oc);
 					if(oc == -1) {
 						printf("Returning to ds selection.\n");
@@ -109,30 +111,23 @@ int main() {
 			case 3: 
 				//Code for Implementing Circular Queue
 				while(1) {
-					printf("Enter which functionality you'd like to use: \n1: Push\n2: Pop\n3: Check Top Value\n4: Check if empty\n5: Check if full\n6: Print the entire Circular Queue\n7: go back to the data structure selection\nYour Choice: ");
+					printf("\n----------------\nEnter which functionality you'd like to use: \n1: Enqueue\n2: Dequeue\n3: Print the entire Circular Queue\n-1: go back to the data structure selection\nYour Choice: ");
 					scanf("%d", &oc);
-					if(oc == 7) {
+					if(oc == -1) {
 						printf("Returning to ds selection.\n");
 						break;
 					}
 					switch(oc) {
 						case 1: 
-							//Code for Circular Queue push
+							printf("Enter the value to be enqueued: ");
+							scanf("%d", &temp);
+							enqueueCirc(&front, &rear, arr, temp);
 							break;
 						case 2: 
-							//Code for Circular Queue pop
+							dequeueCirc(&front, &rear);
 							break;
 						case 3:
-							//Code for printing top value
-							break;
-						case 4: 
-							//Code for Circular Queue isEmpty
-							break;
-						case 5: 
-							//Code for Circular Queue isFull
-							break;
-						case 6: 
-							//Code for printing Circular Queue
+							displayQueueCirc(&front, &rear, arr);
 							break;
 						default: 
 							printf("Invalid Choice. Try again\n");
@@ -233,21 +228,39 @@ int isEmptyCirc(int* front, int* rear) {
 }
 
 int isFullCirc(int* front, int* rear) {
-	if(*front = *rear - 1 || (*front == 0 && *rear == MAX - 1)) return 1;
+	printf("%d and %d\n", *front, *rear);
+	if(*front == *rear - 1 || (*front == MAX && *rear == 0)) return 1;
 	return 0;
-}
-
-void makeCircle(int* front, int* rear) {
-	if(*rear == MAX - 1) *rear = -1;
-	if(*front == MAX - 1) *front = -1;
 }
 
 void enqueueCirc(int* front, int* rear, int* arr, int val) {
 	if(isFullCirc(front, rear)) {
-		printf("Circular Queue is full!\n");
+		printf("Too many elements. Can't add more\n");
 		return;
 	}
-	makeCircle(front, rear); 
-	arr[*rear] = val;
-	*rear += 1;
+	if(*front == MAX - 1)
+		*front = 0;
+	arr[*front] = val;
+	*front += 1;
+}
+
+void dequeueCirc(int* front, int* rear) {
+	if(isEmptyCirc(front, rear)) {
+		printf("Queue is empty!\n");
+		return;
+	}
+	if(*rear == MAX - 1)
+		*rear = 0;
+	*rear = *rear + 1;
+}
+
+void displayQueueCirc (int* front, int* rear, int* arr) {
+	for(int i = *rear; i < *front; i++) {
+		printf("%d ", arr[i]);
+	}
+	if(*front < *rear) {
+		for(int i = 0; i < *front; i++) {
+			printf("%d\n", arr[i]);
+		}
+	}
 }
