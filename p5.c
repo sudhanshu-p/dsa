@@ -13,6 +13,7 @@ typedef struct Node {
 	struct Node* next;
 } Node;
 
+void createList (Node** node, int length);
 int lengthOfList (Node* node);
 void traverse (Node* node);
 
@@ -36,6 +37,21 @@ void main() {
 	while(1) {
 		printf("Enter the type of linked structure you want to use:\n1: Linked list\n2: Linked Stack\n3: Linked Queue\n4: Exit\nYour Choice: ");
 		scanf("%d", &c1);
+		if(c1 == 4){
+			printf("Ending program.\n");
+			exit(0);
+		}
+		printf("Enter the number of element you want to initialize the list with: ");
+		scanf("%d", &t1);
+		printf("Enter the elements: \n");
+		scanf("%d", &t2);
+		createList(&head, t2);
+		t1--;
+		while(t1 > 0) {
+			scanf("%d", &t2);
+			insertAtEnd(head, t2);
+			t1--;
+		}
 		switch(c1) {
 			case 1: 
 				printf("You chose Linked List\n");
@@ -204,14 +220,17 @@ void main() {
 				if(c4 == 0)
 					head = NULL;
 				break;
-			case 4: 
-				printf("Ending program.\n");
-				exit(0);
 			default:
 				printf("Invalid Choice.\n");
 				break;
 		}
 	}
+}
+
+void createList(Node** head, int val) {
+	Node* tempNode = (Node*) malloc(sizeof(Node));
+	tempNode->data = val;
+	*head = tempNode;
 }
 
 int lengthOfList (Node* node) {
