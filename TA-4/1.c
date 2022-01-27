@@ -11,9 +11,6 @@ typedef struct Node {
 } Node;
 
 int priorityInsert (Node** head, Node* node, int val, int priority);
-void removeByValue (Node** head, Node* node, int val);
-void removeByPriority (Node** head, Node* node, int val);
-void removeByIndex (Node** head, Node* node, int val);
 void printList(Node* head);
 void createList(Node** head, int val, int priority);
 
