@@ -38,7 +38,7 @@ void main() {
 	}
 	printf("The linked list is now initialized.\n");
 	while(1) {
-		printf("What operation do you want to carry out on this list?\n1: Insert an element\n2: Remove an element\n3: Print the list\n4: Exit\n");
+		printf("What operation do you want to carry out on this list?\n1: Insert an element\n2: Print the list\n-1: Exit\n");
 		scanf("%d", &c);
 		switch(c) {
 			case 1:
@@ -50,42 +50,12 @@ void main() {
 				t3 = priorityInsert(&head, head, t1, t2);
 				printf("The element was inserted at position %d\n", t3);
 				break;
-			case 2:
-				printf("You chose to remove an element.\n");
-				printf("Select how you want to remove an element: \n1: Using the value\n2: Using the priority\n3: Using it's index\n");
-				scanf("%d", &t1);
-				switch(t1) {
-					case 1: 
-						printf("You chose to remove an element by it's value\n");
-						printf("Enter the value: ");
-						scanf("%d", &t2);
-						removeByValue(&head, head, t2);
-						printf("Removed all elements of value %d\n", t2);
-						break;
-					case 2:
-						printf("You chose to remove an element by priority\n");
-						printf("Enter the priority: ");
-						scanf("%d", t2);
-						removeByPriority(&head, head, t2);
-						printf("Removed all elements of priority %d\n", t2);
-						break;
-					case 3: 
-						printf("You chose to remove an element by it's index\n");
-						printf("Enter the index: ");
-						scanf("%d", &t2);
-						removeByIndex(&head, head, t2);
-						printf("Removed all elements of index %d\n", t2);
-						break;
-					default: 
-						printf("Invalid choice.\n");
-				}
-				break;
-			case 3: 
+			case 2: 
 				printf("You chose to print the list.\n");
 				printf("The list is: \n");
 				printList(head);
 				break;
-			case 4: 
+			case -1: 
 				printf("Exiting program.\n");
 				exit(0);
 			default: 
