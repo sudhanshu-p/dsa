@@ -34,27 +34,6 @@ int lengthOfList (Node* node) {
 	return count;
 }
 
-void reverse (Node** head, Node* node) {
-	if(lengthOfList(node) <= 1)
-		return;
-	Node* tempNode = (Node*) malloc (sizeof(Node));
-	tempNode = node->next;
-	node->next = NULL;
-	Node* tempNode2;
-	while(tempNode->next != NULL) {
-		node->prev = tempNode;
-		tempNode2 = tempNode->next;
-		tempNode->next = node;
-		node = tempNode;
-		tempNode = node->next;
-		tempNode = tempNode2;
-	}
-	node->prev = tempNode;
-	tempNode->next = node;
-	tempNode->prev = NULL;
-	*head = tempNode;
-}
-
 void insertDoubly (Node** head, Node* node, int val, int choice, int c2){
 	Node* tempNode = (Node *) malloc (sizeof(Node));
 	tempNode->data = val;
@@ -72,10 +51,12 @@ void insertDoubly (Node** head, Node* node, int val, int choice, int c2){
 			return;
 		case 2: 
 			if(c2 < lengthOfList (node)) {
+				int count = 0;
 				Node* previous = node;
-				while(node->next != NULL) {
+				while(count < c2) {
 					previous = node;
 					node = node->next;
+					count++;
 				}
 				previous->next = tempNode;
 				node->prev = tempNode;
@@ -138,10 +119,41 @@ int deleteDoubly (Node** head, Node* node, int choice, int loc) {
 	}
 }
 
-int reverseList (Node** head, Node* node) {
-	Node* lagging = (Node*) malloc(sizeof(Node));
-	Node* leading = (Node*) malloc(sizeof(Node));
-	
+void reverseDoubly (Node** head, Node* node) {
+	if(lengthOfList(node) <= 1)
+		return;
+	Node* tempNode = (Node*) malloc (sizeof(Node));
+	tempNode = node->next;
+	node->next = NULL;
+	Node* tempNode2;
+	while(tempNode->next != NULL) {
+		node->prev = tempNode;
+		tempNode2 = tempNode->next;
+		tempNode->next = node;
+		node = tempNode;
+		tempNode = node->next;
+		tempNode = tempNode2;
+	}
+	node->prev = tempNode;
+	tempNode->next = node;
+	tempNode->prev = NULL;
+	*head = tempNode;
+}
+
+void sortDoubly(Node** head, Node* node) {
+	Node* tempNode = node;
+	while (node != NULL) {}
+}
+
+int searchDoubly (Node* node, int val) {
+	int loc = 1;
+	while(node->next != NULL) {
+		if(node->data == val)
+			return loc;
+		loc++;
+		node = node->next;
+	}
+	return -1;
 }
 
 int main() {
@@ -207,10 +219,23 @@ int main() {
 				break;
 			case 4: 
 				printf("You chose to reverse the list\n");
-				reverse(&head, head);
+				reverseDoubly (&head, head);
 				printf("List reversed.\n");
 				break;
-			
+			case 5:
+				printf("You chose to sort the list\n");
+				sortDoubly(&head, head);
+				printf("List sorted!\n");
+			case 6: 
+				printf("You chose to search an element\n");
+				printf("Enter the element you want to search: ");
+				scanf("%d", &c2);
+				c2 = searchDoubly (head, c2);
+				if(c2 == -1)
+					printf("Element not found!\n");
+				else
+					printf("The element was found at location: %d\n", c2);
+				break;
 			default:
 				printf("Noi\n");
 		}
