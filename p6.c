@@ -34,6 +34,27 @@ int lengthOfList (Node* node) {
 	return count;
 }
 
+void reverse (Node** head, Node* node) {
+	if(lengthOfList(node) <= 1)
+		return;
+	Node* tempNode = (Node*) malloc (sizeof(Node));
+	tempNode = node->next;
+	node->next = NULL;
+	Node* tempNode2;
+	while(tempNode->next != NULL) {
+		node->prev = tempNode;
+		tempNode2 = tempNode->next;
+		tempNode->next = node;
+		node = tempNode;
+		tempNode = node->next;
+		tempNode = tempNode2;
+	}
+	node->prev = tempNode;
+	tempNode->next = node;
+	tempNode->prev = NULL;
+	*head = tempNode;
+}
+
 void insertDoubly (Node** head, Node* node, int val, int choice, int c2){
 	Node* tempNode = (Node *) malloc (sizeof(Node));
 	tempNode->data = val;
@@ -97,7 +118,7 @@ int deleteDoubly (Node** head, Node* node, int choice, int loc) {
 			return node->data;
 		case 2: 
 			if(loc >= lengthOfList(node)) 
-				return NULL;
+				return -99;
 			while(count < loc){
 				node = node->next;
 				count++;
@@ -117,12 +138,18 @@ int deleteDoubly (Node** head, Node* node, int choice, int loc) {
 	}
 }
 
+int reverseList (Node** head, Node* node) {
+	Node* lagging = (Node*) malloc(sizeof(Node));
+	Node* leading = (Node*) malloc(sizeof(Node));
+	
+}
+
 int main() {
 	Node* head = (Node*) malloc (sizeof(Node));
 	head = NULL;
 	int c1, c2;
 	while(1) {
-		printf("Enter your choice: \n1: Insertion\n2: Deletion\n3: Print the list\nYour Choice: ");
+		printf("Enter your choice: \n1: Insertion\n2: Deletion\n3: Print the list\n4: Reverse the list\n5: Sort the list\n6: Search the list for an element\nYour Choice: ");
 		scanf("%d", &c1);
 		if(c1 == -1)
 			break;
@@ -178,6 +205,12 @@ int main() {
 						printf("Invalid choice.\n");
 				}
 				break;
+			case 4: 
+				printf("You chose to reverse the list\n");
+				reverse(&head, head);
+				printf("List reversed.\n");
+				break;
+			
 			default:
 				printf("Noi\n");
 		}
