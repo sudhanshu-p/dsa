@@ -7,6 +7,104 @@ typedef struct Node {
 	struct Node* prev;
 } Node;
 
+void traverse (Node* node);
+void reverseTraversal (Node* node);
+int lengthOfList (Node* node);
+
+void insertDoubly (Node** head, Node* node, int val, int choice, int c2);
+int deleteDoubly (Node** head, Node* node, int choice, int loc);
+void reverseDoubly (Node** head, Node* node);
+void sortDoubly (Node* node);
+int searchDoubly (Node* node, int val);
+
+int main() {
+	Node* head = (Node*) malloc (sizeof(Node));
+	head = NULL;
+	int c1, c2;
+	while(1) {
+		printf("Enter your choice: \n1: Insertion\n2: Deletion\n3: Print the list\n4: Reverse the list\n5: Sort the list\n6: Search the list for an element\nYour Choice: ");
+		scanf("%d", &c1);
+		if(c1 == -1)
+			break;
+		switch(c1) {
+			case 1: 
+				printf("You chose insertion. Enter the element you want to insert: ");
+				scanf("%d", &c2);
+				int temp;
+				printf("Enter where you want to insert \n1: At the start\n2: In the middle\n3: At the end\nYour choice: ");
+				scanf("%d", &temp);
+				if(temp == 2) {
+					printf("Enter where you want to insert: ");
+					scanf("%d", &temp);
+					insertDoubly (&head, head, c2, 2, temp);
+					break;
+				}
+				insertDoubly (&head, head, c2, temp, 99);
+				break;
+			case 2:
+				if(lengthOfList(head) == 0) {
+					printf("The list is Empty!\n");
+					break;
+				}
+				printf("You chose deletion. Enter how you want to delete: \n1: The start\n2: In the middle\n3: The end\nYour choice: ");
+				scanf("%d", &c2);
+				if(c2 == 2) {
+					printf("Enter where you want to delete: ");
+					scanf("%d", &temp);
+					temp = deleteDoubly (&head, head, 2, temp);
+					printf("Element deleted: %d\n", temp);
+					break;
+				}
+				temp = deleteDoubly (&head, head, c2, 9999);
+				printf("Element deleted: %d\n", temp);
+				break;
+			case 3: 
+				if(lengthOfList(head) == 0) {
+					printf("The list is Empty!\n");
+					break;
+				}
+				printf("Enter the way you want the list printed: \n1: Forward\n2: Reverse\nYour choice: ");
+				scanf("%d", &c2);
+				switch(c2) {
+					case 1: 
+						printf("The linked list is: \n");
+						traverse(head);
+						break;
+					case 2: 
+						printf("The linked list reversed is: \n");
+						reverseTraversal(head);
+						break;
+					default:
+						printf("Invalid choice.\n");
+				}
+				break;
+			case 4: 
+				printf("You chose to reverse the list\n");
+				reverseDoubly (&head, head);
+				printf("List reversed.\n");
+				break;
+			case 5:
+				printf("You chose to sort the list\n");
+				sortDoubly(head);
+				printf("List sorted!\n");
+                break;
+			case 6: 
+				printf("You chose to search an element\n");
+				printf("Enter the element you want to search: ");
+				scanf("%d", &c2);
+				c2 = searchDoubly (head, c2);
+				if(c2 == -1)
+					printf("Element not found!\n");
+				else
+					printf("The element was found at location: %d\n", c2);
+				break;
+			default:
+				printf("Noi\n");
+		}
+	}
+	printf("Goodbye\n");
+}
+
 void traverse (Node* node) {
 	while(node != NULL) {
 		printf("%d\t", node->data);
@@ -140,9 +238,8 @@ void reverseDoubly (Node** head, Node* node) {
 	*head = tempNode;
 }
 
-void sortDoubly(Node** head, Node* node) {
-	Node* tempNode = node;
-	while (node != NULL) {}
+void sortDoubly(Node* node) {
+   	
 }
 
 int searchDoubly (Node* node, int val) {
@@ -154,91 +251,4 @@ int searchDoubly (Node* node, int val) {
 		node = node->next;
 	}
 	return -1;
-}
-
-int main() {
-	Node* head = (Node*) malloc (sizeof(Node));
-	head = NULL;
-	int c1, c2;
-	while(1) {
-		printf("Enter your choice: \n1: Insertion\n2: Deletion\n3: Print the list\n4: Reverse the list\n5: Sort the list\n6: Search the list for an element\nYour Choice: ");
-		scanf("%d", &c1);
-		if(c1 == -1)
-			break;
-		switch(c1) {
-			case 1: 
-				printf("You chose insertion. Enter the element you want to insert: ");
-				scanf("%d", &c2);
-				int temp;
-				printf("Enter where you want to insert \n1: At the start\n2: In the middle\n3: At the end\nYour choice: ");
-				scanf("%d", &temp);
-				if(temp == 2) {
-					printf("Enter where you want to insert: ");
-					scanf("%d", &temp);
-					insertDoubly (&head, head, c2, 2, temp);
-					break;
-				}
-				insertDoubly (&head, head, c2, temp, 99);
-				break;
-			case 2:
-				if(lengthOfList(head) == 0) {
-					printf("The list is Empty!\n");
-					break;
-				}
-				printf("You chose deletion. Enter how you want to delete: \n1: The start\n2: In the middle\n3: The end\nYour choice: ");
-				scanf("%d", &c2);
-				if(c2 == 2) {
-					printf("Enter where you want to delete: ");
-					scanf("%d", &temp);
-					temp = deleteDoubly (&head, head, 2, temp);
-					printf("Element deleted: %d\n", temp);
-					break;
-				}
-				temp = deleteDoubly (&head, head, c2, 9999);
-				printf("Element deleted: %d\n", temp);
-				break;
-			case 3: 
-				if(lengthOfList(head) == 0) {
-					printf("The list is Empty!\n");
-					break;
-				}
-				printf("Enter the way you want the list printed: \n1: Forward\n2: Reverse\nYour choice: ");
-				scanf("%d", &c2);
-				switch(c2) {
-					case 1: 
-						printf("The linked list is: \n");
-						traverse(head);
-						break;
-					case 2: 
-						printf("The linked list reversed is: \n");
-						reverseTraversal(head);
-						break;
-					default:
-						printf("Invalid choice.\n");
-				}
-				break;
-			case 4: 
-				printf("You chose to reverse the list\n");
-				reverseDoubly (&head, head);
-				printf("List reversed.\n");
-				break;
-			case 5:
-				printf("You chose to sort the list\n");
-				sortDoubly(&head, head);
-				printf("List sorted!\n");
-			case 6: 
-				printf("You chose to search an element\n");
-				printf("Enter the element you want to search: ");
-				scanf("%d", &c2);
-				c2 = searchDoubly (head, c2);
-				if(c2 == -1)
-					printf("Element not found!\n");
-				else
-					printf("The element was found at location: %d\n", c2);
-				break;
-			default:
-				printf("Noi\n");
-		}
-	}
-	printf("Goodbye\n");
 }
