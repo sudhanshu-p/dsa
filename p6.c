@@ -239,7 +239,21 @@ void reverseDoubly (Node** head, Node* node) {
 }
 
 void sortDoubly(Node* node) {
-   	
+   	Node *temp;
+    int count = lengthOfList (node);
+    int i = 0;
+    while(i<count-1) {
+        temp = node;
+        while((temp->next!=NULL)) {
+            if((temp->data)>(temp->next->data)) {
+                int k=temp->data;
+                temp->data=temp->next->data;
+                temp->next->data=k;
+            }
+            temp=temp->next;
+        }
+        i=i+1;
+    }
 }
 
 int searchDoubly (Node* node, int val) {
